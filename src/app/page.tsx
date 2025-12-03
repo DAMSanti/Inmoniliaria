@@ -4,28 +4,28 @@ import { useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 // FEATURE 1: Parallax
-import { ParallaxLayer, ParallaxContainer } from '@/components/effects/ParallaxLayer';
+import { ParallaxLayer, ParallaxContainer } from '../components/effects/ParallaxLayer';
 
 // FEATURE 2: Scroll Animations
-import { ScrollReveal, ScrollProgress, ScrollScale } from '@/components/effects/ScrollAnimations';
+import { ScrollReveal, ScrollProgress, ScrollScale } from '../components/effects/ScrollAnimations';
 
 // FEATURE 3: Microinteractions
-import { TiltCard, BreathingButton, RippleButton, AnimatedLink, AnimatedMenuIcon } from '@/components/effects/MicroInteractions';
+import { TiltCard, BreathingButton, RippleButton, AnimatedLink, AnimatedMenuIcon } from '../components/effects/MicroInteractions';
 
 // FEATURE 4: Kinetic Typography
-import { CascadeText, RotatingWords, FloatingText, GlitchText } from '@/components/effects/KineticTypography';
+import { CascadeText, RotatingWords, FloatingText, GlitchText } from '../components/effects/KineticTypography';
 
 // FEATURE 6: Page Transitions
-import { SectionTransition, StaggerContainer, StaggerItem } from '@/components/effects/PageTransitions';
+import { SectionTransition, StaggerContainer, StaggerItem } from '../components/effects/PageTransitions';
 
 // FEATURE 7: Depth Effects
-import { SpotlightCard, GlassCard, NeonGlow, LightParticles, DynamicShadowCard } from '@/components/effects/DepthEffects';
+import { SpotlightCard, GlassCard, NeonGlow, LightParticles, DynamicShadowCard } from '../components/effects/DepthEffects';
 
 // FEATURE 8: Generative Animations
-import { FloatingShapes, GenerativeWaves } from '@/components/effects/GenerativeAnimations';
+import { FloatingShapes, GenerativeWaves } from '../components/effects/GenerativeAnimations';
 
 // FEATURE 10: Adaptive Design
-import { AdaptiveAnimation, AdaptiveTypography, AdaptiveInteraction, useDeviceInfo } from '@/components/effects/AdaptiveDesign';
+import { AdaptiveAnimation, AdaptiveTypography, AdaptiveInteraction, useDeviceInfo } from '../components/effects/AdaptiveDesign';
 
 // Datos de ejemplo
 const properties = [
