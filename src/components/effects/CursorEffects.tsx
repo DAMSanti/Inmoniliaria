@@ -536,6 +536,3 @@ export function NebulaTrailCursor({ maxParticles = 80 }: { maxParticles?: number
 export function FuturisticCursorComplete() {
   return <SmokeTrailCursor maxParticles={60} />;
 }
-
-// Exportar alternativas
-export { SmokeTrailCursor, FireTrailCursor, NebulaTrailCursor };
