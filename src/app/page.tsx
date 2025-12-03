@@ -152,30 +152,96 @@ export default function HomePage() {
         </GlassCard>
       </motion.header>
 
-      {/* Hero Section */}
+      {/* Hero Section con PARALLAX DRAMÁTICO */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        
+        {/* ===== FEATURE 1: PARALLAX MULTICAPA EXTREMO ===== */}
+        <ParallaxContainer className="absolute inset-0">
+          
+          {/* Capa 1: Fondo degradado - MUY LENTO (profundidad máxima) */}
+          <ParallaxLayer speed={-0.8} className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-purple-900 to-slate-950" />
+          </ParallaxLayer>
+          
+          {/* Capa 2: Círculos grandes borrosos - LENTO */}
+          <ParallaxLayer speed={-0.5} direction="both" className="absolute inset-0 z-10">
+            <div className="absolute top-20 left-10 w-96 h-96 bg-blue-500/30 rounded-full blur-3xl" />
+            <div className="absolute bottom-40 right-20 w-80 h-80 bg-purple-500/40 rounded-full blur-3xl" />
+            <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-pink-500/30 rounded-full blur-3xl" />
+          </ParallaxLayer>
+          
+          {/* Capa 3: Montañas/Formas geométricas - MEDIO LENTO */}
+          <ParallaxLayer speed={-0.3} className="absolute inset-0 z-20">
+            <svg className="absolute bottom-0 w-full h-1/2" viewBox="0 0 1440 400" preserveAspectRatio="none">
+              <polygon fill="rgba(99, 102, 241, 0.3)" points="0,400 200,200 400,300 600,150 800,250 1000,100 1200,200 1440,50 1440,400" />
+            </svg>
+          </ParallaxLayer>
+          
+          {/* Capa 4: Segunda capa de montañas - MEDIO */}
+          <ParallaxLayer speed={-0.1} className="absolute inset-0 z-30">
+            <svg className="absolute bottom-0 w-full h-1/3" viewBox="0 0 1440 300" preserveAspectRatio="none">
+              <polygon fill="rgba(139, 92, 246, 0.4)" points="0,300 300,150 500,200 700,100 900,180 1100,80 1300,150 1440,100 1440,300" />
+            </svg>
+          </ParallaxLayer>
+          
+          {/* Capa 5: Estrellas/Puntos decorativos - HORIZONTAL LENTO */}
+          <ParallaxLayer speed={0.2} direction="horizontal" className="absolute inset-0 z-25 pointer-events-none">
+            <div className="absolute top-[15%] left-[10%] w-2 h-2 bg-white rounded-full animate-pulse" />
+            <div className="absolute top-[25%] left-[25%] w-3 h-3 bg-yellow-300 rounded-full animate-pulse" style={{animationDelay: '0.5s'}} />
+            <div className="absolute top-[10%] left-[50%] w-2 h-2 bg-blue-300 rounded-full animate-pulse" style={{animationDelay: '1s'}} />
+            <div className="absolute top-[30%] left-[70%] w-4 h-4 bg-purple-300 rounded-full animate-pulse" style={{animationDelay: '0.3s'}} />
+            <div className="absolute top-[20%] left-[85%] w-2 h-2 bg-pink-300 rounded-full animate-pulse" style={{animationDelay: '0.7s'}} />
+            <div className="absolute top-[35%] left-[40%] w-3 h-3 bg-cyan-300 rounded-full animate-pulse" style={{animationDelay: '1.2s'}} />
+          </ParallaxLayer>
+          
+          {/* Capa 6: Iconos flotantes grandes - MOVIMIENTO OPUESTO */}
+          <ParallaxLayer speed={0.6} direction="both" rotate scale className="absolute inset-0 z-35 pointer-events-none">
+            <div className="absolute top-[20%] left-[5%] text-6xl opacity-20">🏠</div>
+            <div className="absolute top-[60%] left-[15%] text-7xl opacity-15">🌴</div>
+            <div className="absolute top-[15%] right-[10%] text-8xl opacity-20">✈️</div>
+            <div className="absolute top-[50%] right-[5%] text-6xl opacity-15">🏖️</div>
+            <div className="absolute bottom-[30%] left-[40%] text-7xl opacity-10">🌊</div>
+          </ParallaxLayer>
+          
+          {/* Capa 7: Líneas decorativas - HORIZONTAL RÁPIDO */}
+          <ParallaxLayer speed={0.8} direction="horizontal" className="absolute inset-0 z-15 pointer-events-none">
+            <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+            <div className="absolute top-2/3 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent" />
+          </ParallaxLayer>
+          
+          {/* Capa 8: Formas geométricas flotantes con rotación */}
+          <ParallaxLayer speed={0.4} direction="both" rotate className="absolute inset-0 z-40 pointer-events-none">
+            <div className="absolute top-[40%] left-[20%] w-20 h-20 border-2 border-white/20 rotate-45" />
+            <div className="absolute top-[25%] right-[25%] w-16 h-16 border-2 border-purple-400/30 rounded-full" />
+            <div className="absolute bottom-[35%] left-[60%] w-12 h-12 border-2 border-cyan-400/25 rotate-12" />
+            <div className="absolute top-[55%] left-[75%] w-24 h-24 border border-pink-400/20 rounded-lg rotate-[-20deg]" />
+          </ParallaxLayer>
+          
+        </ParallaxContainer>
+        
         {/* FEATURE 8: Ondas generativas de fondo */}
         <GenerativeWaves waveCount={4} className="opacity-30" />
         
         {/* FEATURE 7: Partículas de luz */}
         <LightParticles count={30} />
 
-        {/* FEATURE 1: Contenedor Parallax */}
-        <ParallaxContainer className="relative z-10 text-center px-4 max-w-5xl mx-auto">
-          {/* FEATURE 1: Capa parallax para el título */}
-          <ParallaxLayer speed={0.3}>
+        {/* Contenido principal del Hero */}
+        <div className="relative z-50 text-center px-4 max-w-5xl mx-auto">
+          
+          {/* FEATURE 1: Título con parallax intenso */}
+          <ParallaxLayer speed={0.5} className="mb-6">
             {/* FEATURE 4: Texto con cascada */}
-            <AdaptiveTypography as="h1" className="font-bold mb-6">
+            <AdaptiveTypography as="h1" className="font-bold">
               <CascadeText 
                 text="Encuentra tu escapada perfecta" 
-                className="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent drop-shadow-2xl"
                 staggerDelay={0.03}
               />
             </AdaptiveTypography>
           </ParallaxLayer>
 
-          {/* FEATURE 1: Capa parallax para subtítulo */}
-          <ParallaxLayer speed={0.5}>
+          {/* FEATURE 1: Subtítulo con parallax diferente */}
+          <ParallaxLayer speed={0.8} direction="horizontal">
             {/* FEATURE 4: Texto con palabras rotativas */}
             <p className="text-xl md:text-2xl text-gray-300 mb-12">
               <RotatingWords
@@ -238,7 +304,7 @@ export default function HomePage() {
               />
             </div>
           </motion.div>
-        </ParallaxContainer>
+        </div>
       </section>
 
       {/* Propiedades Destacadas */}
