@@ -27,6 +27,9 @@ import { FloatingShapes, GenerativeWaves } from '../components/effects/Generativ
 // FEATURE 10: Adaptive Design
 import { AdaptiveAnimation, AdaptiveTypography, AdaptiveInteraction, useDeviceInfo } from '../components/effects/AdaptiveDesign';
 
+// CURSOR FUTURISTA
+import { FuturisticCursorComplete } from '../components/effects/CursorEffects';
+
 // Datos de ejemplo
 const properties = [
   {
@@ -100,6 +103,9 @@ export default function HomePage() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+      {/* CURSOR FUTURISTA - Trail + Glow + Ripples */}
+      <FuturisticCursorComplete />
+      
       {/* FEATURE 2: Barra de progreso de scroll */}
       <ScrollProgress color="#6366f1" height={3} />
 
