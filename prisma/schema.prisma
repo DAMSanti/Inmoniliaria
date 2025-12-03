@@ -293,8 +293,7 @@ model Property {
   @@index([maxGuests])
   @@index([agentId])
   @@index([isFeatured])
-  @@index([address])
-  @@index([city])
+  @@index([address, city, neighborhood])
   @@map("properties")
 }
 
