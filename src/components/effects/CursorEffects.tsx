@@ -531,8 +531,8 @@ export function NebulaTrailCursor({ maxParticles = 80 }: { maxParticles?: number
 }
 
 /**
- * Componente principal - SMOKE TRAIL (el que pediste)
+ * Componente principal - NEBULA TRAIL
  */
 export function FuturisticCursorComplete() {
-  return <SmokeTrailCursor maxParticles={60} />;
+  return <NebulaTrailCursor maxParticles={80} />;
 }
