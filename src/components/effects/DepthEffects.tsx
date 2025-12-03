@@ -249,6 +249,15 @@ interface LightParticlesProps {
 }
 
 export function LightParticles({ count = 20, className = '' }: LightParticlesProps) {
+  const [windowHeight, setWindowHeight] = useState(800);
+  
+  useEffect(() => {
+    setWindowHeight(window.innerHeight);
+    const handleResize = () => setWindowHeight(window.innerHeight);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
   const particles = Array.from({ length: count }, (_, i) => ({
     id: i,
     size: Math.random() * 10 + 5,
@@ -270,7 +279,7 @@ export function LightParticles({ count = 20, className = '' }: LightParticlesPro
             bottom: '-20px',
           }}
           animate={{
-            y: [0, -window.innerHeight - 100],
+            y: [0, -windowHeight - 100],
             opacity: [0, 1, 1, 0],
           }}
           transition={{
