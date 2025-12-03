@@ -1,78 +1,499 @@
+'use client';
+
+import { useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+
+// FEATURE 1: Parallax
+import { ParallaxLayer, ParallaxContainer } from '@/components/effects/ParallaxLayer';
+
+// FEATURE 2: Scroll Animations
+import { ScrollReveal, ScrollProgress, ScrollScale } from '@/components/effects/ScrollAnimations';
+
+// FEATURE 3: Microinteractions
+import { TiltCard, BreathingButton, RippleButton, AnimatedLink, AnimatedMenuIcon } from '@/components/effects/MicroInteractions';
+
+// FEATURE 4: Kinetic Typography
+import { CascadeText, RotatingWords, FloatingText, GlitchText } from '@/components/effects/KineticTypography';
+
+// FEATURE 6: Page Transitions
+import { SectionTransition, StaggerContainer, StaggerItem } from '@/components/effects/PageTransitions';
+
+// FEATURE 7: Depth Effects
+import { SpotlightCard, GlassCard, NeonGlow, LightParticles, DynamicShadowCard } from '@/components/effects/DepthEffects';
+
+// FEATURE 8: Generative Animations
+import { FloatingShapes, GenerativeWaves } from '@/components/effects/GenerativeAnimations';
+
+// FEATURE 10: Adaptive Design
+import { AdaptiveAnimation, AdaptiveTypography, AdaptiveInteraction, useDeviceInfo } from '@/components/effects/AdaptiveDesign';
+
+// Datos de ejemplo
+const properties = [
+  {
+    id: 1,
+    title: 'Villa Mediterránea',
+    location: 'Costa Brava, España',
+    price: 250,
+    rating: 4.9,
+    reviews: 124,
+    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
+  },
+  {
+    id: 2,
+    title: 'Apartamento Frente al Mar',
+    location: 'Málaga, España',
+    price: 180,
+    rating: 4.8,
+    reviews: 89,
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
+  },
+  {
+    id: 3,
+    title: 'Casa Rural con Piscina',
+    location: 'Sevilla, España',
+    price: 150,
+    rating: 4.7,
+    reviews: 67,
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
+  },
+  {
+    id: 4,
+    title: 'Ático de Lujo',
+    location: 'Barcelona, España',
+    price: 350,
+    rating: 5.0,
+    reviews: 45,
+    image: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800',
+  },
+  {
+    id: 5,
+    title: 'Chalet en la Montaña',
+    location: 'Pirineos, España',
+    price: 200,
+    rating: 4.9,
+    reviews: 78,
+    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800',
+  },
+  {
+    id: 6,
+    title: 'Bungalow Tropical',
+    location: 'Canarias, España',
+    price: 175,
+    rating: 4.6,
+    reviews: 92,
+    image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800',
+  },
+];
+
+const destinations = [
+  { name: 'Barcelona', count: 234, image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=400' },
+  { name: 'Málaga', count: 189, image: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=400' },
+  { name: 'Ibiza', count: 156, image: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400' },
+  { name: 'Canarias', count: 201, image: 'https://images.unsplash.com/photo-1559599746-c0f31c73d93e?w=400' },
+];
+
 export default function HomePage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const headerOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0.95]);
+  const { type: deviceType, prefersReducedMotion } = useDeviceInfo();
+
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      {/* Header */}
-      <header className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-blue-600">🏖️ Vacacional Rental</h1>
-          <nav className="space-x-4">
-            <a href="#" className="text-gray-600 hover:text-blue-600">Propiedades</a>
-            <a href="#" className="text-gray-600 hover:text-blue-600">Destinos</a>
-            <a href="#" className="text-gray-600 hover:text-blue-600">Contacto</a>
-          </nav>
-        </div>
-      </header>
+    <main className="min-h-screen bg-slate-950 text-white overflow-x-hidden">
+      {/* FEATURE 2: Barra de progreso de scroll */}
+      <ScrollProgress color="#6366f1" height={3} />
 
-      {/* Hero */}
-      <section className="py-20 px-4 text-center">
-        <h2 className="text-5xl font-bold text-gray-900 mb-6">
-          Encuentra tu escapada perfecta
-        </h2>
-        <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-          Descubre alojamientos únicos para unas vacaciones inolvidables
-        </p>
-        
-        {/* Search Box */}
-        <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <input 
-              type="text" 
-              placeholder="¿A dónde quieres ir?" 
-              className="border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input 
-              type="date" 
-              className="border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <input 
-              type="date" 
-              className="border rounded-lg px-4 py-3 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            />
-            <button className="bg-blue-600 text-white rounded-lg px-6 py-3 hover:bg-blue-700 transition">
-              Buscar
-            </button>
+      {/* FEATURE 8: Formas flotantes de fondo */}
+      <FloatingShapes shapeCount={20} />
+
+      {/* Header con efecto glass */}
+      <motion.header
+        className="fixed top-0 left-0 right-0 z-50"
+        style={{ opacity: headerOpacity }}
+      >
+        {/* FEATURE 7: Glass Card para header */}
+        <GlassCard className="mx-4 mt-4 rounded-2xl" blur={15} opacity={0.1}>
+          <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            {/* FEATURE 4: Logo con efecto glitch */}
+            <GlitchText text="🏖️ Vacacional" className="text-2xl font-bold" />
+            
+            {/* Navegación desktop */}
+            <nav className="hidden md:flex items-center space-x-8">
+              {/* FEATURE 3: Enlaces animados */}
+              <AnimatedLink href="#propiedades" className="text-gray-300 hover:text-white transition">
+                Propiedades
+              </AnimatedLink>
+              <AnimatedLink href="#destinos" className="text-gray-300 hover:text-white transition">
+                Destinos
+              </AnimatedLink>
+              <AnimatedLink href="#servicios" className="text-gray-300 hover:text-white transition">
+                Servicios
+              </AnimatedLink>
+              <AnimatedLink href="#contacto" className="text-gray-300 hover:text-white transition">
+                Contacto
+              </AnimatedLink>
+              
+              {/* FEATURE 3: Botón con efecto respiración */}
+              <BreathingButton className="text-sm" color="#6366f1">
+                Iniciar Sesión
+              </BreathingButton>
+            </nav>
+
+            {/* Menú móvil */}
+            <div className="md:hidden">
+              {/* FEATURE 3: Icono de menú animado */}
+              <AnimatedMenuIcon
+                isOpen={isMenuOpen}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                color="white"
+              />
+            </div>
           </div>
-        </div>
-      </section>
+        </GlassCard>
+      </motion.header>
 
-      {/* Featured Properties */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h3 className="text-3xl font-bold text-center mb-12">Propiedades Destacadas</h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition">
-                <div className="h-48 bg-gradient-to-r from-blue-400 to-blue-600"></div>
-                <div className="p-6">
-                  <h4 className="font-bold text-lg mb-2">Villa de ejemplo {i}</h4>
-                  <p className="text-gray-600 text-sm mb-4">Costa Brava, España</p>
-                  <div className="flex justify-between items-center">
-                    <span className="text-blue-600 font-bold">150€/noche</span>
-                    <span className="text-sm text-gray-500">⭐ 4.9 (24)</span>
-                  </div>
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* FEATURE 8: Ondas generativas de fondo */}
+        <GenerativeWaves waveCount={4} className="opacity-30" />
+        
+        {/* FEATURE 7: Partículas de luz */}
+        <LightParticles count={30} />
+
+        {/* FEATURE 1: Contenedor Parallax */}
+        <ParallaxContainer className="relative z-10 text-center px-4 max-w-5xl mx-auto">
+          {/* FEATURE 1: Capa parallax para el título */}
+          <ParallaxLayer speed={0.3}>
+            {/* FEATURE 4: Texto con cascada */}
+            <AdaptiveTypography as="h1" className="font-bold mb-6">
+              <CascadeText 
+                text="Encuentra tu escapada perfecta" 
+                className="bg-gradient-to-r from-white via-blue-200 to-purple-200 bg-clip-text text-transparent"
+                staggerDelay={0.03}
+              />
+            </AdaptiveTypography>
+          </ParallaxLayer>
+
+          {/* FEATURE 1: Capa parallax para subtítulo */}
+          <ParallaxLayer speed={0.5}>
+            {/* FEATURE 4: Texto con palabras rotativas */}
+            <p className="text-xl md:text-2xl text-gray-300 mb-12">
+              <RotatingWords
+                prefix="Descubre alojamientos"
+                words={['únicos', 'exclusivos', 'increíbles', 'memorables']}
+                suffix="para tus vacaciones"
+                interval={2500}
+              />
+            </p>
+          </ParallaxLayer>
+
+          {/* FEATURE 2: Scroll reveal para el buscador */}
+          <ScrollReveal direction="up" delay={0.5}>
+            {/* FEATURE 7: Spotlight card para buscador */}
+            <SpotlightCard className="bg-white/10 backdrop-blur-xl rounded-2xl p-6 md:p-8">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div className="relative">
+                  <label className="text-xs text-gray-400 mb-1 block">Destino</label>
+                  <input
+                    type="text"
+                    placeholder="¿A dónde quieres ir?"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-gray-400 focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                  />
+                </div>
+                <div className="relative">
+                  <label className="text-xs text-gray-400 mb-1 block">Llegada</label>
+                  <input
+                    type="date"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                  />
+                </div>
+                <div className="relative">
+                  <label className="text-xs text-gray-400 mb-1 block">Salida</label>
+                  <input
+                    type="date"
+                    className="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition"
+                  />
+                </div>
+                {/* FEATURE 3: Botón ripple */}
+                <div className="flex items-end">
+                  <RippleButton className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl px-6 py-3 font-semibold hover:from-indigo-700 hover:to-purple-700 transition">
+                    🔍 Buscar
+                  </RippleButton>
                 </div>
               </div>
-            ))}
+            </SpotlightCard>
+          </ScrollReveal>
+
+          {/* Scroll indicator */}
+          <motion.div
+            className="absolute bottom-10 left-1/2 -translate-x-1/2"
+            animate={{ y: [0, 10, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+              <motion.div
+                className="w-1.5 h-1.5 bg-white rounded-full"
+                animate={{ y: [0, 12, 0], opacity: [1, 0, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
+              />
+            </div>
+          </motion.div>
+        </ParallaxContainer>
+      </section>
+
+      {/* Propiedades Destacadas */}
+      <section id="propiedades" className="py-24 px-4 relative">
+        {/* FEATURE 6: Transición de sección */}
+        <SectionTransition>
+          <div className="max-w-7xl mx-auto">
+            {/* FEATURE 2: Scroll reveal para título */}
+            <ScrollReveal direction="up">
+              <div className="text-center mb-16">
+                {/* FEATURE 4: Texto flotante */}
+                <FloatingText 
+                  text="Propiedades Destacadas" 
+                  className="text-4xl md:text-5xl font-bold mb-4"
+                />
+                <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                  Selección exclusiva de los mejores alojamientos para tus vacaciones
+                </p>
+              </div>
+            </ScrollReveal>
+
+            {/* FEATURE 6: Contenedor con stagger */}
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" staggerDelay={0.15}>
+              {properties.map((property) => (
+                <StaggerItem key={property.id}>
+                  {/* FEATURE 10: Interacción adaptativa */}
+                  <AdaptiveInteraction>
+                    {/* FEATURE 3: Tarjeta con inclinación 3D */}
+                    <TiltCard intensity={10}>
+                      {/* FEATURE 7: Tarjeta con sombra dinámica */}
+                      <DynamicShadowCard
+                        className="bg-slate-900/80 rounded-2xl overflow-hidden border border-white/10"
+                        shadowColor="rgba(99, 102, 241, 0.3)"
+                        intensity={20}
+                      >
+                        {/* Imagen con overlay */}
+                        <div className="relative h-56 overflow-hidden">
+                          <img
+                            src={property.image}
+                            alt={property.title}
+                            className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                          <div className="absolute top-4 right-4">
+                            {/* FEATURE 7: Efecto neón */}
+                            <NeonGlow color="#6366f1" intensity={10}>
+                              <span className="bg-indigo-600 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                ⭐ {property.rating}
+                              </span>
+                            </NeonGlow>
+                          </div>
+                        </div>
+
+                        {/* Contenido */}
+                        <div className="p-6">
+                          <h3 className="text-xl font-bold mb-2">{property.title}</h3>
+                          <p className="text-gray-400 text-sm mb-4 flex items-center">
+                            <span className="mr-2">📍</span>
+                            {property.location}
+                          </p>
+                          <div className="flex justify-between items-center">
+                            <div>
+                              <span className="text-2xl font-bold text-indigo-400">{property.price}€</span>
+                              <span className="text-gray-500 text-sm">/noche</span>
+                            </div>
+                            <span className="text-gray-500 text-sm">
+                              {property.reviews} reseñas
+                            </span>
+                          </div>
+                        </div>
+                      </DynamicShadowCard>
+                    </TiltCard>
+                  </AdaptiveInteraction>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+
+            {/* Botón ver más */}
+            <ScrollReveal direction="up" delay={0.8}>
+              <div className="text-center mt-12">
+                <BreathingButton color="#6366f1">
+                  Ver todas las propiedades →
+                </BreathingButton>
+              </div>
+            </ScrollReveal>
           </div>
-        </div>
+        </SectionTransition>
+      </section>
+
+      {/* Destinos Populares */}
+      <section id="destinos" className="py-24 px-4 bg-slate-900/50 relative">
+        <SectionTransition>
+          <div className="max-w-7xl mx-auto">
+            <ScrollReveal direction="left">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                  Destinos Populares
+                </h2>
+                <p className="text-gray-400 text-lg">
+                  Los lugares favoritos de nuestros viajeros
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {destinations.map((destination, index) => (
+                <ScrollReveal key={destination.name} direction="scale" delay={index * 0.1}>
+                  {/* FEATURE 2: Escala con scroll */}
+                  <ScrollScale scaleRange={[0.9, 1, 0.9]}>
+                    <AdaptiveInteraction>
+                      <SpotlightCard className="relative h-64 rounded-2xl overflow-hidden group cursor-pointer">
+                        <img
+                          src={destination.image}
+                          alt={destination.name}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        <div className="absolute bottom-0 left-0 right-0 p-6">
+                          <h3 className="text-xl font-bold mb-1">{destination.name}</h3>
+                          <p className="text-gray-300 text-sm">{destination.count} propiedades</p>
+                        </div>
+                      </SpotlightCard>
+                    </AdaptiveInteraction>
+                  </ScrollScale>
+                </ScrollReveal>
+              ))}
+            </div>
+          </div>
+        </SectionTransition>
+      </section>
+
+      {/* Servicios / Features */}
+      <section id="servicios" className="py-24 px-4 relative">
+        <SectionTransition>
+          <div className="max-w-7xl mx-auto">
+            <ScrollReveal direction="up">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                  ¿Por qué elegirnos?
+                </h2>
+                <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                  Ofrecemos la mejor experiencia para encontrar tu alojamiento ideal
+                </p>
+              </div>
+            </ScrollReveal>
+
+            <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8" staggerDelay={0.2}>
+              {[
+                {
+                  icon: '🔒',
+                  title: 'Reserva Segura',
+                  description: 'Pago seguro y garantía de reembolso. Tu dinero está protegido.',
+                },
+                {
+                  icon: '🌟',
+                  title: 'Calidad Verificada',
+                  description: 'Todas las propiedades son verificadas y cumplen nuestros estándares.',
+                },
+                {
+                  icon: '💬',
+                  title: 'Soporte 24/7',
+                  description: 'Atención al cliente disponible las 24 horas del día, los 7 días.',
+                },
+              ].map((feature) => (
+                <StaggerItem key={feature.title}>
+                  <TiltCard intensity={8}>
+                    <GlassCard className="p-8 rounded-2xl h-full" blur={10} opacity={0.1}>
+                      <div className="text-5xl mb-6">{feature.icon}</div>
+                      <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
+                      <p className="text-gray-400">{feature.description}</p>
+                    </GlassCard>
+                  </TiltCard>
+                </StaggerItem>
+              ))}
+            </StaggerContainer>
+          </div>
+        </SectionTransition>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-24 px-4 relative overflow-hidden">
+        {/* FEATURE 8: Ondas de fondo */}
+        <GenerativeWaves waveCount={3} className="opacity-20" />
+        
+        <SectionTransition>
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <ScrollReveal direction="up">
+              <GlassCard className="p-12 rounded-3xl" blur={20} opacity={0.15}>
+                <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                  ¿Listo para tu próxima aventura?
+                </h2>
+                <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
+                  Únete a miles de viajeros que ya han encontrado su alojamiento perfecto con nosotros
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <BreathingButton color="#6366f1">
+                    Explorar propiedades
+                  </BreathingButton>
+                  <RippleButton className="bg-white/10 border border-white/20 text-white rounded-xl px-8 py-4 font-semibold hover:bg-white/20 transition">
+                    Publicar mi propiedad
+                  </RippleButton>
+                </div>
+              </GlassCard>
+            </ScrollReveal>
+          </div>
+        </SectionTransition>
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="text-gray-400">© 2025 Vacacional Rental Platform. Todos los derechos reservados.</p>
+      <footer id="contacto" className="bg-slate-900/80 border-t border-white/10 py-16 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+            <div>
+              <GlitchText text="🏖️ Vacacional" className="text-2xl font-bold mb-4" />
+              <p className="text-gray-400 text-sm">
+                La mejor plataforma para encontrar alojamientos vacacionales únicos en toda España.
+              </p>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Explorar</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><AnimatedLink href="#" className="hover:text-white">Propiedades</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Destinos</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Ofertas</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Blog</AnimatedLink></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Soporte</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><AnimatedLink href="#" className="hover:text-white">Centro de ayuda</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Contacto</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">FAQ</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Política de cancelación</AnimatedLink></li>
+              </ul>
+            </div>
+            
+            <div>
+              <h4 className="font-semibold mb-4">Legal</h4>
+              <ul className="space-y-2 text-gray-400 text-sm">
+                <li><AnimatedLink href="#" className="hover:text-white">Términos de servicio</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Política de privacidad</AnimatedLink></li>
+                <li><AnimatedLink href="#" className="hover:text-white">Cookies</AnimatedLink></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div className="border-t border-white/10 pt-8 text-center text-gray-500 text-sm">
+            <p>© 2025 Vacacional Rental Platform. Todos los derechos reservados.</p>
+          </div>
         </div>
       </footer>
     </main>
   );
 }
+
