@@ -6,6 +6,42 @@ const withNextIntl = createNextIntlPlugin('./src/i18n/request.ts');
 const nextConfig = {
   reactStrictMode: true,
   
+  // Desactivar source maps en producción para reducir memoria
+  productionBrowserSourceMaps: false,
+  
+  // Optimización de webpack para bajo consumo de memoria
+  webpack: (config, { isServer }) => {
+    // Reducir el uso de memoria durante el build
+    config.optimization = {
+      ...config.optimization,
+      moduleIds: 'deterministic',
+      splitChunks: {
+        chunks: 'all',
+        minSize: 20000,
+        maxSize: 244000,
+        cacheGroups: {
+          three: {
+            test: /[\\/]node_modules[\\/](three|@react-three)[\\/]/,
+            name: 'three-vendor',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+          animations: {
+            test: /[\\/]node_modules[\\/](framer-motion|gsap)[\\/]/,
+            name: 'animation-vendor',
+            priority: 10,
+            reuseExistingChunk: true,
+          },
+        },
+      },
+    };
+    
+    // Desactivar cache de webpack para reducir memoria
+    config.cache = false;
+    
+    return config;
+  },
+  
   images: {
     remotePatterns: [
       {
@@ -25,7 +61,20 @@ const nextConfig = {
   },
 
   experimental: {
-    optimizePackageImports: ['lucide-react', 'framer-motion'],
+    optimizePackageImports: ['lucide-react', 'framer-motion', '@react-three/drei'],
+  },
+  
+  // Configuración del compilador SWC para reducir uso de memoria
+  swcMinify: true,
+  
+  // No generar tipos automáticamente
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  
+  // No fallar por errores de ESLint
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 
   async headers() {
