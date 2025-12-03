@@ -1,0 +1,78 @@
+# ================================================
+# PRODUCCIÓN LIGERA - 1GB RAM
+# Solo servicios esenciales
+# ================================================
+
+version: '3.8'
+
+services:
+  # PostgreSQL
+  postgres:
+    image: postgres:16-alpine
+    container_name: vacacional_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}
+      POSTGRES_DB: vacacional_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network
+    # Limitar memoria
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+
+  # Redis (caché)
+  redis:
+    image: redis:7-alpine
+    container_name: vacacional_redis
+    restart: unless-stopped
+    command: redis-server --maxmemory 64mb --maxmemory-policy allkeys-lru
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+
+  # Next.js App
+  app:
+    image: node:20-alpine
+    container_name: vacacional_app
+    restart: unless-stopped
+    working_dir: /app
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=postgresql://postgres:${DB_PASSWORD:-postgres123}@postgres:5432/vacacional_db
+      - REDIS_URL=redis://redis:6379
+    volumes:
+      - ./:/app
+      - node_modules:/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: sh -c "npm install && npx prisma generate && npm run build && npm start"
+    networks:
+      - app_network
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
+volumes:
+  postgres_data:
+  node_modules:
+
+networks:
+  app_network:
+    driver: bridge
